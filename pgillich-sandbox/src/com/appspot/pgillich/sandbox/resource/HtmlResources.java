@@ -53,11 +53,17 @@ public interface HtmlResources extends ClientBundle {
 	@Source("com/appspot/pgillich/sandbox/resource/html/EngineeringSystems.html")
 	ExternalTextResource htmlEngineeringSystems();
 
+	@Source("com/appspot/pgillich/sandbox/resource/html/EngineeringMuseums.html")
+	ExternalTextResource htmlEngineeringMuseums();
+
 	@Source("com/appspot/pgillich/sandbox/resource/html/HardwareHome.html")
 	ExternalTextResource htmlHardwareHome();
 
 	@Source("com/appspot/pgillich/sandbox/resource/html/HardwareSale.html")
 	ExternalTextResource htmlHardwareSale();
+
+	@Source("com/appspot/pgillich/sandbox/resource/html/HardwareTools.html")
+	ExternalTextResource htmlHardwareTools();
 
 	@Source("com/appspot/pgillich/sandbox/resource/html/NetworksAutomotive.html")
 	ExternalTextResource htmlNetworksAutomotive();
@@ -79,6 +85,9 @@ public interface HtmlResources extends ClientBundle {
 
 	@Source("com/appspot/pgillich/sandbox/resource/html/PeopleBooks.html")
 	ExternalTextResource htmlPeopleBooks();
+
+	@Source("com/appspot/pgillich/sandbox/resource/html/PeopleMovies.html")
+	ExternalTextResource htmlPeopleMovies();
 
 	@Source("com/appspot/pgillich/sandbox/resource/html/PeopleCv.html")
 	ExternalTextResource htmlPeopleCv();

@@ -24,6 +24,9 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.Label;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -61,10 +64,12 @@ public class Pgillich_sandbox implements EntryPoint {
 	private TreeItem trtmEngineeringSimulation;
 	private TreeItem trtmEngineeringModeling;
 	private TreeItem trtmEngineeringSystems;
+	private TreeItem trtmEngineeringMuseums;
 	private TreeItem trtmEngineeringPaperwork;
 	private MenuItem mntmNetworks;
 	private TreeItem trtmPeopleCv;
 	private TreeItem trtmPeopleBooks;
+	private TreeItem trtmPeopleMovies;
 	private HTML htmlPeopleMyself;
 	private HTML htmlPeopleFriends;
 	private HTML htmlPeopleBlogs;
@@ -72,8 +77,10 @@ public class Pgillich_sandbox implements EntryPoint {
 	private HTML htmlEngineeringSimulation;
 	private HTML htmlEngineeringModeling;
 	private HTML htmlEngineeringSystems;
+	private HTML htmlEngineeringMuseums;
 	private HTML htmlEngineeringPaperwork;
 	private HTML htmlPeopleBooks;
+	private HTML htmlPeopleMovies;
 	private HTML htmlAboutContact;
 	private HTML htmlAboutCopyright;
 	private HTML htmlAboutHistory;
@@ -88,6 +95,7 @@ public class Pgillich_sandbox implements EntryPoint {
 	private HTML htmlEngineeringSeries;
 	private HTML htmlHardwareHome;
 	private HTML htmlHardwareSale;
+	private HTML htmlHardwareTools;
 	private HTML htmlNetworksAutomotive;
 	private HTML htmlNetworksCms;
 	private HTML htmlNetworksCloud;
@@ -109,6 +117,7 @@ public class Pgillich_sandbox implements EntryPoint {
 	private TreeItem trtmSoftwareFavorites;
 	private TreeItem trtmHardwareHome;
 	private TreeItem trtmHardwareSale;
+	private TreeItem trtmHardwareTools;
 	private TreeItem trtmNetworksSecurity;
 	private TreeItem trtmNetworksAutomotive;
 	private TreeItem trtmNetworksCms;
@@ -120,6 +129,8 @@ public class Pgillich_sandbox implements EntryPoint {
 	private TreeItem trtmEngineeringDiesel;
 	private TreeItem trtmEngineeringEsp;
 	private TreeItem trtmEngineeringFem;
+	private SimplePanel rightPaddingPanel;
+	private Label lblRightPadding;
 	
 
 	/**
@@ -258,7 +269,6 @@ public class Pgillich_sandbox implements EntryPoint {
 			{
 				pagesDeckPanel = new DeckPanel();
 				pagesDeckPanel.setStyleName("pagesDeckPanel");
-				pagesDeckPanel.setAnimationEnabled(true);
 				bodyPanel.add(pagesDeckPanel, DockPanel.CENTER);
 				pagesDeckPanel.setSize("100%", "100%");
 				{
@@ -326,12 +336,20 @@ public class Pgillich_sandbox implements EntryPoint {
 					pagesDeckPanel.add(htmlEngineeringSystems);
 				}
 				{
+					htmlEngineeringMuseums = new HTML();
+					pagesDeckPanel.add(htmlEngineeringMuseums);
+				}
+				{
 					htmlHardwareHome = new HTML();
 					pagesDeckPanel.add(htmlHardwareHome);
 				}
 				{
 					htmlHardwareSale = new HTML();
 					pagesDeckPanel.add(htmlHardwareSale);
+				}
+				{
+					htmlHardwareTools = new HTML();
+					pagesDeckPanel.add(htmlHardwareTools);
 				}
 				{
 					htmlNetworksAutomotive = new HTML();
@@ -362,6 +380,9 @@ public class Pgillich_sandbox implements EntryPoint {
 					pagesDeckPanel.add(htmlPeopleBooks);
 				}
 				{
+					htmlPeopleMovies = new HTML();
+					pagesDeckPanel.add(htmlPeopleMovies);
+				}				{
 					htmlPeopleCv = new HTML();
 					pagesDeckPanel.add(htmlPeopleCv);
 				}
@@ -417,7 +438,11 @@ public class Pgillich_sandbox implements EntryPoint {
 						treePeople.addItem(trtmPeopleBooks);
 						registerTreeSelectedHtml(trtmPeopleBooks, htmlPeopleBooks, htmlResources.htmlPeopleBooks(), pagesDeckPanel);
 					}
-				}
+					{
+						trtmPeopleMovies = new TreeItem("Movies");
+						treePeople.addItem(trtmPeopleMovies);
+						registerTreeSelectedHtml(trtmPeopleMovies, htmlPeopleMovies, htmlResources.htmlPeopleMovies(), pagesDeckPanel);
+					}				}
 				{
 					treeEngineering = new Tree();
 					treeEngineering.setTitle("Engineering");
@@ -455,6 +480,11 @@ public class Pgillich_sandbox implements EntryPoint {
 						trtmEngineeringSimulation.setState(true);
 					}
 					{
+						trtmEngineeringMuseums = new TreeItem("Museums");
+						treeEngineering.addItem(trtmEngineeringMuseums);
+						registerTreeSelectedHtml(trtmEngineeringMuseums, htmlEngineeringMuseums, htmlResources.htmlEngineeringMuseums(), pagesDeckPanel);
+					}
+					{
 						trtmEngineeringPaperwork = new TreeItem("Paperwork");
 						treeEngineering.addItem(trtmEngineeringPaperwork);
 						registerTreeSelectedHtml(trtmEngineeringPaperwork, htmlEngineeringPaperwork, htmlResources.htmlEngineeringPaperwork(), pagesDeckPanel);
@@ -471,6 +501,7 @@ public class Pgillich_sandbox implements EntryPoint {
 					}
 					{
 						trtmEngineeringCatastrophes = new TreeItem("Catastrophes");
+						trtmEngineeringCatastrophes.setText("Disasters");
 						treeEngineering.addItem(trtmEngineeringCatastrophes);
 						registerTreeSelectedHtml(trtmEngineeringCatastrophes, htmlEngineeringCatastrophes, htmlResources.htmlEngineeringCatastrophes(), pagesDeckPanel);
 					}
@@ -510,14 +541,19 @@ public class Pgillich_sandbox implements EntryPoint {
 					treeDeckPanel.add(treeHardware);
 					treeHardware.setTitle("Hardware");
 					{
-						trtmHardwareHome = new TreeItem("at Home");
+						trtmHardwareHome = new TreeItem("Home");
 						treeHardware.addItem(trtmHardwareHome);
 						registerTreeSelectedHtml(trtmHardwareHome, htmlHardwareHome, htmlResources.htmlHardwareHome(), pagesDeckPanel);
 					}
 					{
-						trtmHardwareSale = new TreeItem("for Sale");
+						trtmHardwareTools = new TreeItem("Tools");
+						treeHardware.addItem(trtmHardwareTools);
+						registerTreeSelectedHtml(trtmHardwareTools, htmlHardwareTools, htmlResources.htmlHardwareTools(), pagesDeckPanel);
+					{
+						trtmHardwareSale = new TreeItem("Sale");
 						treeHardware.addItem(trtmHardwareSale);
 						registerTreeSelectedHtml(trtmHardwareSale, htmlHardwareSale, htmlResources.htmlHardwareSale(), pagesDeckPanel);
+					}
 					}
 				}
 				{
@@ -525,7 +561,7 @@ public class Pgillich_sandbox implements EntryPoint {
 					treeDeckPanel.add(treeSoftware);
 					treeSoftware.setTitle("Software");
 					{
-						trtmSoftwareAutotest = new TreeItem("Automatic Test");
+						trtmSoftwareAutotest = new TreeItem("Test Automation");
 						treeSoftware.addItem(trtmSoftwareAutotest);
 						registerTreeSelectedHtml(trtmSoftwareAutotest, htmlSoftwareAutotest, htmlResources.htmlSoftwareAutotest(), pagesDeckPanel);
 					}
@@ -571,6 +607,16 @@ public class Pgillich_sandbox implements EntryPoint {
 					}
 				}
 			}			
+			
+			rightPaddingPanel = new SimplePanel();
+			bodyPanel.add(rightPaddingPanel, DockPanel.EAST);
+			bodyPanel.setCellWidth(rightPaddingPanel, "80px");
+			bodyPanel.setCellHorizontalAlignment(rightPaddingPanel, HasHorizontalAlignment.ALIGN_CENTER);
+			rightPaddingPanel.setSize("80px", "100px");
+			
+			lblRightPadding = new Label("");
+			rightPaddingPanel.setWidget(lblRightPadding);
+			lblRightPadding.setSize("80px", "100px");
 		}
 		
 		selectFirst();
@@ -630,7 +676,7 @@ public class Pgillich_sandbox implements EntryPoint {
 	}
 	
 	private void setAsyncHtml(final HTML htmlWidget, ExternalTextResource htmlResource, TreeItem selectorItem) {
-		final String linkToThis = "<span style='float:right'><a href='"+getTreeItemUrl(selectorItem)+"' title='"+LINK_TO_THIS_TITLE+"'>"+LINK_TO_THIS_PAGE+"</a></span>\n";
+		final String linkToThis = "<span style='float:right'><a href='"+getTreeItemUrl(selectorItem, null)+"' title='"+LINK_TO_THIS_TITLE+"'>"+LINK_TO_THIS_PAGE+"</a></span>\n";
 		
 		try {
 			htmlResource.getText(new ResourceCallback<TextResource>() {
@@ -653,18 +699,24 @@ public class Pgillich_sandbox implements EntryPoint {
 		
 		selectorTree.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			public void onSelection(SelectionEvent<TreeItem> event) {
-				if(selectorItem.equals(event.getSelectedItem()))
+				if(selectorItem.equals(event.getSelectedItem())) {
 					deckPanel.showWidget(deckPanel.getWidgetIndex(htmlWidget)); 
+					Track.track(selectorItem.getTree().getTitle(), selectorItem.getText());
+				}
 			}
 		});		
 	}
 	
-	private String getTreeItemUrl(TreeItem item) {
+	public void showDeckHtml() {
+		
+	}
+	
+	private String getTreeItemUrl(TreeItem item, String hash) {
 		UrlBuilder url = Window.Location.createUrlBuilder();
 		
 		url.setParameter(URL_PARAMETER_TREE, item.getTree().getTitle());
 		url.setParameter(URL_PARAMETER_ITEM, item.getText());
-		url.setHash("");
+		url.setHash(hash);
 		
 		return url.buildString();
 	}
