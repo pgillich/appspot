@@ -34,7 +34,7 @@ h1 {
 }
 
 .buttonAppenginePowered {
-	margin: 1px 15px 1px 1px;
+	margin: 1px 20px 1px 1px;
 	cursor: hand;
 }
 
@@ -57,6 +57,6 @@ h1 {
 	margin-left: 15px;
 	padding-right: 15px;
 	padding-left: 15px;
-	border-right: thin solid;
-	border-left: thin solid;
+	border-right: 2px solid silver;
+	border-left: 2px solid silver;
 }
