@@ -453,7 +453,7 @@ public class Pgillich_sandbox implements EntryPoint {
 						registerTreeSelectedHtml(trtmEngineeringSystems, htmlEngineeringSystems, htmlResources.htmlEngineeringSystems(), pagesDeckPanel);
 					}
 					{
-						trtmEngineeringModeling = new TreeItem("Modeling");
+						trtmEngineeringModeling = new TreeItem("Modeling Languages");
 						treeEngineering.addItem(trtmEngineeringModeling);
 						registerTreeSelectedHtml(trtmEngineeringModeling, htmlEngineeringModeling, htmlResources.htmlEngineeringModeling(), pagesDeckPanel);
 						trtmEngineeringModeling.setState(true);
@@ -610,13 +610,13 @@ public class Pgillich_sandbox implements EntryPoint {
 			
 			rightPaddingPanel = new SimplePanel();
 			bodyPanel.add(rightPaddingPanel, DockPanel.EAST);
-			bodyPanel.setCellWidth(rightPaddingPanel, "80px");
+			bodyPanel.setCellWidth(rightPaddingPanel, "60px");
 			bodyPanel.setCellHorizontalAlignment(rightPaddingPanel, HasHorizontalAlignment.ALIGN_CENTER);
-			rightPaddingPanel.setSize("80px", "100px");
+			rightPaddingPanel.setSize("60px", "100px");
 			
 			lblRightPadding = new Label("");
 			rightPaddingPanel.setWidget(lblRightPadding);
-			lblRightPadding.setSize("80px", "100px");
+			lblRightPadding.setSize("60px", "100px");
 		}
 		
 		selectFirst();
