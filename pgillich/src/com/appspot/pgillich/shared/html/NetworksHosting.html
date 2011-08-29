@@ -1,0 +1,173 @@
+<h2>Server Hosting</h2>
+<p>There are more different requirements and solutions, see: <a href="http://en.wikipedia.org/wiki/Web_hosting_service">Web hosting service</a></p>
+<h3>Free web hosting service</h3>
+<p>There are different kind of service collection and support.</p>
+<dl>
+<dt>Only Apache httpd</dt>
+<dd>It is the simplest service. It can be used for hosting albums and other Javascript-based pages, for example: <a href="http://jalbum.net/">jAlbum</a>. Limited usability for CMS, but the <a href="http://www.tiddlywiki.com/">TiddlyWiki</a> works there.</dd>
+<dt>Apache httpd + PHP + MySQL</dt>
+<dd>Most popular service combo, with simple management and limited rights/resources. The management and deployment requires some technical background. There are a lot of applications and frameworks.</dd>
+<dt>Pre-installed PHP + MySQL portal</dt>
+<dd>It's a typical Web 2.0 service. The service provider gives pre-installed CMS, for example: <a href="http://drupalcafe.com/">DrupalCafe</a> and <a href="http://www.joomlahostingfree.com/">JoomlaHost</a>. The registration and deployment takes some minutes. The site management has GUI frontend, only some basic Internet skills are required.</dd>
+<dt>Java Servlet hosting</dt>
+<dd>Relatively new services. A well-known hosting service is the <a href="http://code.google.com/appengine/">Google App Engine</a>. There are <a href="http://glassfish.java.net/">GlassFish</a>-based service, for example: <a href="http://glassfishhosting.net/">GlassFish Hosting.net</a>.</dd>
+<dt>Script engine hosting</dt>
+<dd><a href="http://code.google.com/appengine/docs/python/overview.html">Google App Engine Python</a> for simple and  <a href="http://code.google.com/appengine/docs/go/overview.html">Google App Engine Go</a> for enterprise/cloud usage.</dd>
+</dl>
+<h3><a href="http://en.wikipedia.org/wiki/Virtual_private_server">Virtual Private Server</a></h3>
+<p>It is the cheapest solution for reliable and durable 24/7 small business servers. Depending on the required resources, the price starts about $25/month, see: <a href="http://www.vpsaccount.com/">Top 10 VPS Account Hosts</a></p>
+<h3><a href="http://en.wikipedia.org/wiki/Cloud_Hosting">Cloud hosting</a></h3>
+<p>A good example for cloud hosting is <a href="http://aws.amazon.com/ec2/">Amazon Elastic Compute Cloud (Amazon EC2)</a>. The business reason for the public availability of Amazon cloud service is the Christmas shopping season. The Amazon must buy and keep a huge infrastructure to serve the Christmas orders. But after the season, the infrastructure is abused. To help new AWS customers get started in the cloud, AWS is introducing a free usage tier: <a href="http://aws.amazon.com/free/">AWS Free Usage Tier</a>.</p>
+<p>The Ubuntu community has worked out images for the E2C, see: <a href="http://www.ubuntu.com/business/cloud/overview">Ubuntu cloud computing overview</a>. There are CentOS-based images, too. I also have created an very small CentOS 5 x86_64 image, see the script:</p>
+<pre style='overflow:scroll; height:300px; border:inset,medium; overflow-x: auto; white-space: pre-wrap; white-space: -moz-pre-wrap !important; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;'>
+# working directory
+mkdir -p /root/scratch/
+cd /root/scratch/
+
+# Amazon tools
+wget 'http://s3.amazonaws.com/ec2-downloads/ec2-ami-tools.noarch.rpm'
+yum localinstall --nogpgcheck ec2-ami-tools.noarch.rpm
+wget 'http://s3.amazonaws.com/ec2-downloads/ec2-api-tools.zip'
+unzip ec2-api-tools.zip
+ln -s ec2-api-tools-1.3-62308 ec2-api-tools
+export EC2_HOME=/root/scratch/ec2-api-tools
+export PATH=$EC2_HOME/bin:$PATH
+export JAVA_HOME=/usr/java/default
+
+# Useful devices
+mkdir -p /root/scratch/ami/{dev,etc,proc,sys}
+MAKEDEV -d /root/scratch/ami/dev -x console
+MAKEDEV -d /root/scratch/ami/dev -x null
+MAKEDEV -d /root/scratch/ami/dev -x zero
+
+# minimal fstab
+mkdir -p /root/scratch/ami/etc/
+nano /root/scratch/ami/etc/fstab
+/dev/sda1           	/                   	ext3	defaults    	1 1
+tmpfs               	/dev/shm            	tmpfs   defaults    	0 0
+devpts              	/dev/pts            	devpts  gid=5,mode=620  0 0
+sysfs               	/sys                	sysfs   defaults    	0 0
+proc                	/proc               	proc	defaults    	0 0
+
+# special mounts
+mount -t proc proc /root/scratch/ami/proc
+mount -t sysfs sysfs /root/scratch/ami/sys
+
+# CentOS packages
+mkdir -p /root/scratch/yum_cache
+mkdir -p /root/scratch/yum_persist
+nano /root/scratch/yum.conf
+[main]
+cachedir=/root/scratch/yum_cache
+persistdir=/root/scratch/yum_persist
+keepcache=0
+debuglevel=2
+logfile=/root/scratch/yum.log
+distroverpkg=redhat-release
+tolerant=1
+exactarch=1
+obsoletes=1
+gpgcheck=0
+plugins=1
+reposdir=/dev/null
+ 
+# Note: yum-RHN-plugin doesn't honor this.
+metadata_expire=1h
+ 
+# Default.
+# installonly_limit = 3
+ 
+[centos-5]
+name=CentOS 5 - Base
+#baseurl=http://msync.centos.org/centos-5/5/os/$basearch/
+mirrorlist=http://mirrorlist.centos.org/?release=5&arch=$basearch&repo=os
+enabled=1
+ 
+[centos-5-updates]
+name=CentOS 5 - Updates
+#baseurl=http://msync.centos.org/centos-5/5/updates/$basearch/
+mirrorlist=http://mirrorlist.centos.org/?release=5&arch=$basearch&repo=updates
+enabled=1
+ 
+[centos-5-epel]
+name=Extra Packages for Enterprise Linux 5 - $basearch
+#baseurl=http://download.fedora.redhat.com/pub/epel/5/$basearch/
+mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=testing-epel5&arch=$basearch
+enabled=0
+yum clean all
+# /etc/groups, /etc/rpm/
+yum -c /root/scratch/yum.conf --installroot /root/scratch/ami install setup filesystem
+# only english locales
+mkdir -p /root/scratch/ami/etc/rpm/
+nano /root/scratch/ami/etc/rpm/macros.lang
+%_install_langs   en:en_EN:en_US:en_GB:en@quot:en@boldquot
+yum -c /root/scratch/yum.conf --installroot /root/scratch/ami groupinstall Core
+yum -c /root/scratch/yum.conf --installroot /root/scratch/ami install kernel-xen
+# optional packages
+yum -c /root/scratch/yum.conf --installroot /root/scratch/ami groupinstall Base
+yum -c /root/scratch/yum.conf --installroot /root/scratch/ami remove kernel-2.6.18
+yum -c /root/scratch/yum.conf --installroot /root/scratch/ami remove libX11 libXau libXcursor libXdmcp libXext libXfixes libXft libXi libXinerama libXrandr libXrender libXres libXt libXxf86vm xorg-x11-filesystem redhat-logos
+
+# configuration
+nano /root/scratch/ami/etc/sysconfig/network-scripts/ifcfg-eth0
+DEVICE=eth0
+BOOTPROTO=dhcp
+ONBOOT=yes
+TYPE=Ethernet
+USERCTL=yes
+PEERDNS=yes
+IPV6INIT=no
+nano /root/scratch/ami/etc/sysconfig/network
+NETWORKING=yes
+NETWORKING_IPV6=no
+nano /root/scratch/ami/etc/modprobe.conf
+alias eth0 xennet
+alias scsi_hostadapter xenblk
+nano /root/scratch/ami/etc/selinux/config
+(...)
+	SELINUX=disabled
+	(...)
+nano /root/scratch/ami/etc/rc.d/rc.local
+	(...)
+	if [ ! -d /root/.ssh ] ; then
+    		mkdir -p /root/.ssh
+    	chmod 700 /root/.ssh
+fi
+ 
+/usr/bin/curl -f http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key > /root/.ssh/authorized_keys
+ 
+chmod 600 /root/.ssh/authorized_keys
+nano /root/scratch/ami/etc/ssh/sshd_config
+UseDNS no
+# boot and users
+chroot /root/scratch/ami
+mkinitrd -f /boot/initrd-2.6.18-194.32.1.el5xen.img 2.6.18-194.32.1.el5xen
+pwconv
+passwd
+chkconfig --list sshd
+chkconfig firstboot off
+chkconfig kudzu off
+exit
+nano /root/scratch/ami/boot/grub/grub.conf
+default=0
+timeout=5
+title CentOS (2.6.18-194.32.1.el5xen)
+    root (hd0)
+    kernel /boot/vmlinuz-2.6.18-194.32.1.el5xen ro root=/dev/sda1
+    initrd /boot/initrd-2.6.18-194.32.1.el5xen.img
+cd /root/scratch/ami/boot/grub
+ln -s grub.conf menu.lst
+cd /root/scratch/ami/etc
+ln -s ../boot/grub/grub.conf
+cd /root/scratch
+
+# umount spec mounts
+sync
+umount /root/scratch/ami/proc
+umount /root/scratch/ami/sys
+
+# build image
+ec2-bundle-vol --cert X.509/cert-2KAZPZEHTPNUFRNHOGVICWGDEOXXXXXX.pem --privatekey X.509/pk-2KAZPZEHTPNUFRNHOGVICWGDEOXXXXXX.pem --volume /root/scratch/ami --prefix centos5-core-x86_64 --user 2486-5289-0000 --destination /mnt/hda3/XEN/ --arch x86_64 --no-inherit --size 5000
+
+ec2-upload-bundle -m /mnt/hda3/XEN/centos5-core-x86_64.manifest.xml -b centos5-core-64 -a AKIAIGLZYTYV3RXXXXXX -s GY90X0IanIwkde73ajnMnAm8iDq7vIE78jXXXXXX --location EU
+</pre>
