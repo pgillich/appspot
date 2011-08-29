@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ESP</title>
+</head>
+<body>
+<h2>ESP Simulation</h2> 
+<p>by Peter Gillich</p>
+<h3>Requires</h3>
+<ul>
+<li>Latest Sun/Oracle <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">JDK</a>, perhaps JRE is enough. Tested with JDK 6 Update 24 (1.6.24).</li>
+<li>Enabled Sun/Oracle <a href="http://www.oracle.com/technetwork/java/index-jsp-141438.html">Java Plug-in</a> in the web browser. It's enabled by default.</li>
+<li><b><a href="http://java3d.java.net/">Java 3D</a>. After install, browsers must be restarted. Old video cards aren't supported. Tested with <a href="http://download.java.net/media/java3d/builds/release/1.5.2/j3d-1_5_2-windows-i586.exe">Java 3D 1.5.2 (Windows)</a>.</b></li>
+</ul>
+<h3>Model Description</h3>
+<p>It's a very simple ESP simulation. See more about ESP on Wikipedia: <a href="http://en.wikipedia.org/wiki/Electronic_stability_control">Electronic Stability Control</a>. See more details about the model in a <a href="http://www.ptc.com/products/mathcad/">Mathcad 14</a> file: <a href="ESP.xmcd" mimetype="application/x-mathcad">ESP.xmcd</a>. The <a href="http://cs.gmu.edu/~eclab/projects/mason/">MASON</a> simulation library is used for GUI features.</p>
+<h3>Usage</h3>
+<p>Click on <b>Start MASON</b>, select ESP and click on <b>Select</b>. Please wait some seconds for presenting two new windows.</p>
+<p>After start, select the <b>Model</b> tab and change some parameter, for example:
+<ul>
+<li>CorrectingBreakEnabled: Enables/disables correcting break.</li>
+<li>Dt: Delta t, smaller means slower simulation.</li>
+</ul>
+Press the Play button. On the <b>Display</b> window, 3D operations (zoom, pan, rotation) are possible by left/middle/right button + mouse movement.</p>
+<p>
+<applet code="sim.display.SimApplet.class" archive="mason_app.jar,mason.jar,itext-1.2.jar,jcommon-1.0.0.jar,jfreechart-1.0.1.jar,jmf.jar" width="300" height="30">
+<param name="CODE" value="sim.display.SimApplet.class">
+<param name="ARCHIVE" value="mason_app.jar,mason.jar,itext-1.2.jar,jcommon-1.0.0.jar,jfreechart-1.0.1.jar,jmf.jar">
+<param name="type" value="application/x-java-applet;version=1.1">
+<param name="Simulation" value="sim.display.Console">
+<param name="Name" value="MASON">
+</applet>
+</p>
+</body>
+</html>
