@@ -7,6 +7,10 @@ body, table td, select {
   font-size: medium;
 }
 
+dd {
+	margin-bottom: 5px;
+}
+
 .gwt-MenuBar-horizontal .gwt-MenuItem {
   padding: 3px 10px;
 }

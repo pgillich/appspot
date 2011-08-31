@@ -9,6 +9,7 @@ import com.appspot.pgillich.shared.MotorResult;
 import com.appspot.pgillich.shared.MotorStep;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Node;
 import com.google.gwt.resources.client.ExternalTextResource;
 import com.google.gwt.resources.client.ResourceCallback;
 import com.google.gwt.resources.client.ResourceException;
@@ -57,6 +58,7 @@ import com.google.gwt.visualization.client.visualizations.corechart.ScatterChart
 import com.google.gwt.visualization.client.visualizations.corechart.TextStyle;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -188,6 +190,8 @@ public class Pgillich implements EntryPoint {
 	private Button btnMotorStart;
 	private VerticalPanel verticalPanelMotorResult;
 	private ScrollPanel scrollPanelMotor;
+	private HTML htmlCustomSearch;
+	private HorizontalPanel horizontalPanelTopRight;
 
 	/**
 	 * @wbp.parser.entryPoint
@@ -288,6 +292,8 @@ public class Pgillich implements EntryPoint {
 					menuBar = new MenuBar(false);
 
 					topPanel.add(menuBar, DockPanel.WEST);
+					topPanel.setCellWidth(menuBar, "100%");
+					menuBar.setWidth("");
 					{
 						mntmPeople = new MenuItem("People", false, cmdShowPeople);
 						menuBar.addItem(mntmPeople);
@@ -314,17 +320,52 @@ public class Pgillich implements EntryPoint {
 					}
 				}
 				{
-					htmlPoweredByGae = new HTML(
-							"<a href=\"http://code.google.com/appengine/\"><img src=\"http://code.google.com/appengine/images/appengine-silver-120x30.gif\" \r\nalt=\"Powered by Google App Engine\" /></a>",
-							true);
-					htmlPoweredByGae.setStyleName("buttonAppenginePowered");
-					topPanel.add(htmlPoweredByGae, DockPanel.EAST);
-					topPanel.setCellHorizontalAlignment(htmlPoweredByGae,
-							HasHorizontalAlignment.ALIGN_CENTER);
-					topPanel.setCellVerticalAlignment(htmlPoweredByGae,
-							HasVerticalAlignment.ALIGN_MIDDLE);
-					topPanel.setCellHeight(htmlPoweredByGae, "36px");
-					topPanel.setCellWidth(htmlPoweredByGae, "122px");
+					horizontalPanelTopRight = new HorizontalPanel();
+					horizontalPanelTopRight.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+					topPanel.add(horizontalPanelTopRight, DockPanel.EAST);
+					horizontalPanelTopRight.setWidth("300px");
+					{
+						/*
+						 * htmlCustomSearch = new HTML(
+						 * "<div id=\"cse-search-form\" style=\"width: 100px;\">Loading</div>"
+						 * +
+						 * "<script src=\"http://www.google.com/jsapi\" type=\"text/javascript\"></script>"
+						 * + "<script type=\"text/javascript\"> " +
+						 * "  alert('1'); google.load('search', '1', {language : 'en'});"
+						 * +
+						 * "  alert('2'); google.setOnLoadCallback(function() { alert('3');"
+						 * +
+						 * "    var customSearchControl = new google.search.CustomSearchControl('015667138580796937216:dqm6obogtjy');"
+						 * +
+						 * "    customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);"
+						 * + "    var options = new google.search.DrawOptions();" +
+						 * "    options.enableSearchboxOnly(\"http://www.google.com/cse?cx=015667138580796937216:dqm6obogtjy\");"
+						 * +
+						 * "    customSearchControl.draw('cse-search-form', options);"
+						 * + "  }, true);" + "</script>" +
+						 * "<link rel=\"stylesheet\" href=\"http://www.google.com/cse/style/look/default.css\" type=\"text/css\" />"
+						 * , true);
+						 */
+						
+						// http://www.google.com/cse/docs/cref.html
+						htmlCustomSearch = new HTML(
+								"<form id=\"cref\" action=\"http://www.google.com/cse\" style=\"margin-left:13px;\" class=\"gwt-TextBox\">"
+										+ "  <input type=\"hidden\" name=\"cref\" value=\"http://pgillich.appspot.com/cse_context.xml\" />"
+										+ "  <input type=\"text\" name=\"q\" size=\"20\" />"
+/*										+ "  <input type=\"submit\" name=\"sa\" value=\"Search\" />"
+*/										+ "</form>"
+/*									+ "<script type=\"text/javascript\" src=\"http://www.google.com/cse/brand?form=cref\"></script>"
+*/							, true);
+						htmlCustomSearch.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+						horizontalPanelTopRight.add(htmlCustomSearch);
+					}
+					{
+						htmlPoweredByGae = new HTML(
+								"<a href=\"http://code.google.com/appengine/\"><img src=\"http://code.google.com/appengine/images/appengine-silver-120x30.gif\" \r\nalt=\"Powered by Google App Engine\" /></a>",
+								true);
+						horizontalPanelTopRight.add(htmlPoweredByGae);
+						htmlPoweredByGae.setStyleName("buttonAppenginePowered");
+					}
 				}
 			}
 			{
@@ -475,7 +516,7 @@ public class Pgillich implements EntryPoint {
 						htmlGraphTraversalDescription = new HTML(
 								"<p>"
 										+ "It's a simple example for a graph traversal. Shows the first founded path. "
-										+ "The algorithm is optimized for mesh and line topology. "
+										+ "The algorithm is optimized for mesh and line topology. Source code can be found on <a href=\"https://github.com/pgillich/appspot/tree/master/pgillich/src/com/appspot/pgillich/client/example/graph\">GitHub</a>."
 										+ "</p>"
 										+ "<p>"
 										+ "Usage: Select the 'Mesh Topology' scatter and change the predefined parameters, if you want. "
@@ -871,6 +912,7 @@ public class Pgillich implements EntryPoint {
 		}
 
 		selectFirst();
+		initCustomSearch(htmlCustomSearch.getElement().getChild(0));
 	}
 
 	/**
@@ -1384,4 +1426,75 @@ public class Pgillich implements EntryPoint {
 		runner.start(textGraphTraversalNodes.getText(), txtbxGraphTraversalEdges.getText(),
 				verticalPanelGraphTraversalResult);
 	}
+
+	/**
+	 * http://www.google.com/cse/brand?form=cref
+	 * com.google.gwt.dom.client.Node
+	 */
+	public static native void initCustomSearch(Node n) /*-{
+		var f = document.getElementById('cref');
+		if (!f) {
+			f = n;
+		}
+		if (f && f.q) {
+			var q = f.q;
+			var n = navigator;
+			var l = location;
+			var su = function() {
+				var u = document.createElement('input');
+				var v = document.location.toString();
+				var existingSiteurl = /(?:[?&]siteurl=)([^&#]*)/.exec(v);
+				if (existingSiteurl) {
+					v = decodeURI(existingSiteurl[1]);
+				}
+				var delimIndex = v.indexOf('://');
+				if (delimIndex >= 0) {
+					v = v.substring(delimIndex + '://'.length, v.length);
+				}
+				u.name = 'siteurl';
+				u.value = v;
+				u.type = 'hidden';
+				f.appendChild(u);
+			};
+			if (n.appName == 'Microsoft Internet Explorer') {
+				var s = f.parentNode.childNodes;
+				for ( var i = 0; i < s.length; i++) {
+					if (s[i].nodeName == 'SCRIPT'
+							&& s[i].attributes['src']
+							&& s[i].attributes['src'].nodeValue == unescape('http:\x2F\x2Fwww.google.com\x2Fcse\x2Fbrand?form=cref')) {
+						su();
+						break;
+					}
+				}
+			} else {
+				su();
+			}
+	
+			if (n.platform == 'Win32') {
+				q.style.cssText = 'border: 1px solid #7e9db9; padding: 2px;';
+			}
+	
+			if (window.history.navigationMode) {
+				window.history.navigationMode = 'compatible';
+			}
+	
+			var b = function() {
+				if (q.value == '') {
+					q.style.background = '#FFFFFF url(http:\x2F\x2Fwww.google.com\x2Fcse\x2Fintl\x2Fen\x2Fimages\x2Fgoogle_custom_search_watermark.gif) left no-repeat';
+				}
+			};
+	
+			var f = function() {
+				q.style.background = '#ffffff';
+			};
+	
+			q.onfocus = f;
+			q.onblur = b;
+	
+			if (!/[&?]q=[^&]/.test(l.search)) {
+				b();
+			}
+		}
+
+	}-*/;
 }

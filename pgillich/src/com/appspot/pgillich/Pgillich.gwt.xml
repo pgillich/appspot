@@ -25,4 +25,7 @@
   <source path='shared'/>
 
   <stylesheet src="/Pgillich.css"/>
+<!-- 
+  <script src="http://www.google.com/jsapi"/>
+ -->  
 </module>
