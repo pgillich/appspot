@@ -3,12 +3,17 @@
 <ul>
 <li>Latest Sun/Oracle <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">JDK</a>, perhaps JRE is enough. Tested with JDK 6  (1.6.24, 1.6.26).</li>
 <li>Enabled Sun/Oracle <a href="http://www.oracle.com/technetwork/java/index-jsp-141438.html">Java Plug-in</a> in the web browser. It's enabled by default.</li>
-<li><b><a href="http://java3d.java.net/binary-builds.html">Java 3D</a>. Before install, the JAVA_HOME environment variable must be set. After install, browsers must be restarted. Old video cards aren't supported. Tested with <a href="http://download.java.net/media/java3d/builds/release/1.5.2/j3d-1_5_2-windows-i586.exe">Java 3D 1.5.2 x86 (Windows XP, Windows 7)</a> and <a href="http://download.java.net/media/java3d/builds/release/1.5.2/j3d-1_5_2-windows-amd64.exe">Java 3D 1.5.2 amd64 (Windows 7)</a>.</b></li>
+<li><b><a href="http://java3d.java.net/binary-builds.html">Java 3D</a>. 
+After install, browsers must be restarted.</b> 
+Old video cards aren't supported. <br/>
+Tested with <a href="http://download.java.net/media/java3d/builds/release/1.5.2/j3d-1_5_2-windows-i586.exe">Java 3D 1.5.2 x86 (Windows XP x86, Windows 7 x86, Windows 7 amd64)</a>. <br/>
+On an amd64 Windows, with an x86 browser (it's the most common use case), use the x86 installer, instead of <a href="http://download.java.net/media/java3d/builds/release/1.5.2/j3d-1_5_2-windows-amd64.exe">Java 3D 1.5.2 amd64</a> (tested on Windows 7 amd64).
+</li>
 </ul>
 <h3>Model Description</h3>
 <p>It's a very simple 3D kinamatic simulation. See more about ESP on Wikipedia: <a href="http://en.wikipedia.org/wiki/Electronic_stability_control">Electronic Stability Control</a>. See more details about the model in a <a href="http://www.ptc.com/products/mathcad/">Mathcad 14</a> file: <a href="/mason_esp/ESP.xmcd" mimetype="application/x-mathcad">ESP.xmcd</a>. The <a href="http://cs.gmu.edu/~eclab/projects/mason/">MASON</a> simulation library is used for GUI features.</p>
 <h3>Usage</h3>
-<p>Click on <b>Start MASON</b>, select ESP and click on <b>Select</b>. Please wait some seconds for presenting two new windows.</p>
+<p>If <b>Start MASON</b> appears (please be patient - GAE is a very slow file server), click on it and select ESP and click on <b>Select</b>. Please wait some seconds for presenting two new windows.</p>
 <p>After start, select the <b>Model</b> tab and change some parameter, for example:
 <ul>
 <li>CorrectingBreakEnabled: Enables/disables correcting break.</li>
