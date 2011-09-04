@@ -25,7 +25,42 @@
     <servlet-name>motorServlet</servlet-name>
     <url-pattern>/pgillich/motor</url-pattern>
   </servlet-mapping>
-      
+
+  <servlet>
+    <servlet-name>TreeRedirector</servlet-name>
+    <servlet-class>com.appspot.pgillich.server.TreeRedirector</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>TreeRedirector</servlet-name>
+    <url-pattern>/People/*</url-pattern>
+  </servlet-mapping>
+ 
+  <servlet-mapping>
+    <servlet-name>TreeRedirector</servlet-name>
+    <url-pattern>/Engineering/*</url-pattern>
+  </servlet-mapping>
+    
+  <servlet-mapping>
+    <servlet-name>TreeRedirector</servlet-name>
+    <url-pattern>/Networks/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>TreeRedirector</servlet-name>
+    <url-pattern>/Hardware/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>TreeRedirector</servlet-name>
+    <url-pattern>/Software/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>TreeRedirector</servlet-name>
+    <url-pattern>/About/*</url-pattern>
+  </servlet-mapping>
+            
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

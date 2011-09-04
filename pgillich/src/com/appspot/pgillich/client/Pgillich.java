@@ -7,6 +7,7 @@ import com.appspot.pgillich.client.example.graph.GwtRunner;
 import com.appspot.pgillich.shared.HtmlResources;
 import com.appspot.pgillich.shared.MotorResult;
 import com.appspot.pgillich.shared.MotorStep;
+import com.appspot.pgillich.shared.SharedConfig;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Node;
@@ -67,8 +68,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
  * 
  */
 public class Pgillich implements EntryPoint {
-	private static final String URL_PARAMETER_TREE = "tree";
-	private static final String URL_PARAMETER_ITEM = "item";
 	private static final String LINK_TO_THIS_PAGE = "Link to this page";
 	private static final String LINK_TO_THIS_TITLE = "Copy this link";
 	public static final String MOTOR_FORM_FIELD_PREFIX = "motor_";
@@ -349,7 +348,7 @@ public class Pgillich implements EntryPoint {
 						
 						// http://www.google.com/cse/docs/cref.html
 						htmlCustomSearch = new HTML(
-								"<form id=\"cref\" action=\"http://www.google.com/cse\" style=\"margin-left:13px;\" class=\"gwt-TextBox\">"
+								"<form id=\"cref\" action=\"http://www.google.com/cse\" style=\"margin-left: 10px; padding: 0px;\" class=\"gwt-TextBox\">"
 										+ "  <input type=\"hidden\" name=\"cref\" value=\"http://pgillich.appspot.com/cse_context.xml\" />"
 										+ "  <input type=\"text\" name=\"q\" size=\"20\" />"
 /*										+ "  <input type=\"submit\" name=\"sa\" value=\"Search\" />"
@@ -1088,8 +1087,8 @@ public class Pgillich implements EntryPoint {
 	private void selectFirst() {
 		TreeItem startTreeItem = trtmAboutWelcome;
 
-		String treeName = Window.Location.getParameter(URL_PARAMETER_TREE);
-		String itemName = Window.Location.getParameter(URL_PARAMETER_ITEM);
+		String treeName = Window.Location.getParameter(SharedConfig.URL_PARAMETER_TREE);
+		String itemName = Window.Location.getParameter(SharedConfig.URL_PARAMETER_ITEM);
 
 		if (treeName != null && itemName != null) {
 			for (int t = 0; t < treeDeckPanel.getWidgetCount(); t++) {
@@ -1185,8 +1184,8 @@ public class Pgillich implements EntryPoint {
 	private static String getTreeItemUrl(TreeItem item, String hash) {
 		UrlBuilder url = Window.Location.createUrlBuilder();
 
-		url.setParameter(URL_PARAMETER_TREE, item.getTree().getTitle());
-		url.setParameter(URL_PARAMETER_ITEM, item.getText());
+		url.setParameter(SharedConfig.URL_PARAMETER_TREE, item.getTree().getTitle());
+		url.setParameter(SharedConfig.URL_PARAMETER_ITEM, item.getText());
 		url.setHash(hash);
 
 		return url.buildString();
