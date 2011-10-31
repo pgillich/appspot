@@ -137,6 +137,7 @@ public class Pgillich implements EntryPoint {
 	private HTML htmlNetworksHosting;
 	private HTML htmlNetworksSecurity;
 	private HTML htmlSoftwareAutotest;
+	private HTML htmlSoftwareCannyCad;
 	private HTML htmlSoftwareFavorites;
 	private HTML htmlSoftwareExamples;
 	private Tree treeNetworks;
@@ -151,6 +152,7 @@ public class Pgillich implements EntryPoint {
 	private TreeItem trtmAboutTraffic;
 	private TreeItem trtmAboutWelcome;
 	private TreeItem trtmSoftwareAutotest;
+	private TreeItem trtmSoftwareCannyCad;
 	private TreeItem trtmSoftwareFavorites;
 	private TreeItem trtmSoftwareExamples;
 	private TreeItem trtmSoftwareGraphTraversal;
@@ -501,6 +503,10 @@ public class Pgillich implements EntryPoint {
 					pagesDeckPanel.add(htmlSoftwareAutotest);
 				}
 				{
+					htmlSoftwareCannyCad = new HTML();
+					pagesDeckPanel.add(htmlSoftwareCannyCad);
+				}
+				{
 					htmlSoftwareFavorites = new HTML();
 					pagesDeckPanel.add(htmlSoftwareFavorites);
 				}
@@ -822,6 +828,12 @@ public class Pgillich implements EntryPoint {
 						treeSoftware.addItem(trtmSoftwareAutotest);
 						registerTreeSelectedHtml(trtmSoftwareAutotest, htmlSoftwareAutotest,
 								htmlResources.htmlSoftwareAutotest(), pagesDeckPanel);
+					}
+					{
+						trtmSoftwareCannyCad = new TreeItem("CannyCAD");
+						treeSoftware.addItem(trtmSoftwareCannyCad);
+						registerTreeSelectedHtml(trtmSoftwareCannyCad, htmlSoftwareCannyCad,
+								htmlResources.htmlSoftwareCannyCad(), pagesDeckPanel);
 					}
 					{
 						trtmSoftwareFavorites = new TreeItem("Favorites");
