@@ -101,6 +101,9 @@ public interface HtmlResources extends ClientBundle {
 	@Source("com/appspot/pgillich/shared/html/SoftwareAutotest.html")
 	ExternalTextResource htmlSoftwareAutotest();
 
+	@Source("com/appspot/pgillich/shared/html/SoftwareCannyCad.html")
+	ExternalTextResource htmlSoftwareCannyCad();
+
 	@Source("com/appspot/pgillich/shared/html/SoftwareFavorites.html")
 	ExternalTextResource htmlSoftwareFavorites();
 	
