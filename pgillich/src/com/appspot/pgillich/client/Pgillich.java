@@ -591,7 +591,7 @@ public class Pgillich implements EntryPoint {
 						htmlMotorDescription = new HTML(
 								"<p>I've written a diesel engine simulation in middle of '90s. It was written in Borland C. <br/>" +
 								"This demo is a Java porting of the C code and it runs on Google App Engine.<br/>" +
-								"The source code can be found on GitHub, but please be patient -  it was one of my first programs with a lot of stylistic mistakes.</p>",
+								"The source code can be found on <a href=\"https://github.com/pgillich/appspot/tree/master/pgillich/src/com/appspot/pgillich/engineering/motor46\">GitHub</a>, but please be patient -  it was one of my first programs with a lot of stylistic mistakes.</p>",
 								true);
 						stackPanelMotor.add(htmlMotorDescription, "Description", false);
 						htmlMotorDescription.setSize("100%", "");
